@@ -14,16 +14,18 @@ namespace CommanderGQL;
 
         public void ConfigureServices(IServiceCollection services)
          {
+        //Write code to add services to the service container "IServiceProvider" here
 
         services.AddDbContext<AppDbContext>(opt => opt.UseSqlServer
         (Configuration.GetConnectionString("CommandConStr")));
-
+        
          }
 
 
 
         public void Configure(IApplicationBuilder app,IWebHostEnvironment env)
         {
+        //Write code here to configure the request processing pipeline
         if (env.IsDevelopment())
         {
             app.UseDeveloperExceptionPage();
