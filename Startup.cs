@@ -1,5 +1,7 @@
 ﻿using CommanderGQL.Data;
+using CommanderGQL.GraphQL;
 using Microsoft.EntityFrameworkCore;
+using GraphQL.Server.Ui.Voyager;
 
 namespace CommanderGQL;
 
@@ -16,8 +18,13 @@ namespace CommanderGQL;
          {
         //Write code to add services to the service container "IServiceProvider" here
 
-        services.AddDbContext<AppDbContext>(opt => opt.UseSqlServer
+        services.AddPooledDbContextFactory<AppDbContext>(opt => opt.UseSqlServer
         (Configuration.GetConnectionString("CommandConStr")));
+
+        services
+            .AddGraphQLServer()
+            .AddQueryType<Query>()
+            .AddProjections();
         
          }
 
@@ -40,6 +47,10 @@ namespace CommanderGQL;
             endpoints.MapGraphQL();
         });
 
+        app.UseGraphQLVoyager("/ui-voyager", new VoyagerOptions()
+        {
+            GraphQLEndPoint = "/graphql"
+        }) ;
        
     }
 

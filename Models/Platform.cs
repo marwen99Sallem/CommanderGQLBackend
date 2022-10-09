@@ -12,5 +12,7 @@ namespace CommanderGQL.Models;
     
     public string? LicenceKey { get; set; }
 
+    public ICollection<Command> commands { get; set; }=new List<Command>();
+
 }
 
